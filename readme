@@ -1,0 +1,9 @@
+Immortal| pipex |cat file1
+This is inside the test file
+the
+the
+the
+Immortal| pipex |clang pipex.c -o out; ./out file1 "grep the" "wc -l" outfile
+Immortal| pipex |cat outfile                                                 
+       4
+Immortal| pipex |
