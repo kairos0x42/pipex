@@ -1,0 +1,71 @@
+PIPE()
+
+        :: Create a pipe, a unidirectional data channel that can be used for
+        interprocess communication
+        :: Used to transfer data between two processes
+        :: Takes an array of two ints 
+                int fd [2];
+                pipe(fd);
+
+
+        :: pipefd is used to return two file descriptors referring to the ends of the pipe
+        pipefd[0]  :: read end of pipe
+        pipefd[1]  :: write end of pipe
+
+
+        #include <unistd.h>
+
+        int pipe(int pipefd[2]);
+
+
+
+EXECVE()
+
+        :: Execute a program
+        :: Execute with environment variables
+        :: Used to execute a program in a currently running process
+        :: The program executed replaces the current running program with the
+        specified program
+        :: File descriptors remain open across an execve()
+        :: The file descriptors that were open in the calling process before
+        'execve()' are inherited by the new program.
+
+        #include <unistd.h>
+
+        int execve(const char *pathname, char *const argv[], char *const envp[]);
+
+
+FORK()
+
+        :: Create a new process
+        :: Returns a struct type pid_t
+        :: An exact copy of the calling process (parent process) except as:
+                ; The child has a unique pid
+                ; The child process has a ppid of the calling process
+                ; The child process has its own copy of the parent's file descriptors
+        :: In the parent process, fork() returns the pid of the child
+        :: In the child process, fork() returns 0
+
+
+        #include <unistd.h>
+
+        pid_t fork(void);
+
+
+
+DUP2()
+
+        :: duplicate a file descriptor
+        :: Uses the file descriptor specified in `newfd`
+                ; If `newfd` was previously open, it is closed before being reused
+        :: If `oldfd` is a valid file descriptor, and `newfd` has the same value
+        as oldfd, then dup2() does nothing, and returns newfd
+        :: tldr; oldfd becomes newfd and newfd closes
+        :: Change stdin to be the read end of the pipe
+                dup2(pipe_fd[0],0)
+
+
+        #include <unistd.h>
+        
+        int dup2(int oldfd, int newfd);
+
